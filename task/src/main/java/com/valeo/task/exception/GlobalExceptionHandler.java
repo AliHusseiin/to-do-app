@@ -14,12 +14,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponseDTO<String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ApiResponseDTO<>(400, "Bad Request", e.getMessage()));
+                .body(new ApiResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "No Content", e.getMessage()));
     }
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<ApiResponseDTO<Void>> handleTaskNotFoundException(TaskNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponseDTO<>(404, e.getMessage(), null));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(new ApiResponseDTO<>(HttpStatus.NO_CONTENT.value(), e.getMessage(), null));
     }
     @ExceptionHandler({RequestParamMissingException.class, RequestBodyMissingException.class})
     public ResponseEntity<ApiResponseDTO<Void>> handleMissingParameterException(RuntimeException e) {
